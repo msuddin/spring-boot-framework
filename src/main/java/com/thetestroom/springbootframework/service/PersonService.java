@@ -7,11 +7,14 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 /*
 Use the  @Service tag to tell Spring that this is a service.
 Can also use @Component here but @Service is much more clearer.
+A service class should also contain all the logic
  */
 public class PersonService {
 
@@ -33,5 +36,17 @@ public class PersonService {
 
     public List<Person> getAllPeople() {
         return personDao.selectAllPeople();
+    }
+
+    public Optional<Person> getPersonById(UUID id) {
+        return personDao.selectPersonById(id);
+    }
+
+    public int deletePerson(UUID id) {
+        return personDao.deletePersonById(id);
+    }
+
+    public int updatePerson(UUID id, Person person) {
+        return personDao.updatePersonById(id, person);
     }
 }

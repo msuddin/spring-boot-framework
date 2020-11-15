@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository("fakeDao")
@@ -12,6 +13,7 @@ import java.util.UUID;
 Use the @Repository tag to tell Spring that this class needs to be instantiated as a bean for other classes.
 Can also say @Component but @Repository says that this is a DAO component.
 You can optionally give it a name if the interface is implemented multiple times.
+This class is responsible to perform all the CRUD operations therefore needs logic to know how to do that
  */
 public class FakePersonDataAccessService implements PersonDao {
 
@@ -26,5 +28,43 @@ public class FakePersonDataAccessService implements PersonDao {
     @Override
     public List<Person> selectAllPeople() {
         return db;
+    }
+
+    @Override
+    public Optional<Person> selectPersonById(UUID id) {
+        return db.stream()
+                .filter(person -> person.getId().equals(id))
+                .findFirst();
+    }
+
+    @Override
+    public int deletePersonById(UUID id) {
+        Optional<Person> personMaybe = selectPersonById(id);
+        // Is personMaybe is empty then list was empty i.e. person was not found
+        if (personMaybe.isEmpty()) {
+            return 0;
+        }
+        // Other remove the person
+        db.remove(personMaybe.get());
+        return 1;
+    }
+
+    @Override
+    public int updatePersonById(UUID id, Person updatedPerson) {
+        // First we select the person by id
+        return selectPersonById(id)
+                .map(person -> {
+                    // Then we get the index value of the person in the DB
+                    int indexOfPersonToUpdate = db.indexOf(person);
+                    // Check to see if we found something
+                    if (indexOfPersonToUpdate >= 0) {
+                        // If we did then we replace that person
+                        db.set(indexOfPersonToUpdate, new Person(id, updatedPerson.getName()));
+                        return 1;
+                    }
+                    return 0;
+                })
+                // If the first call to selectByPersonById return nothing then we return 0
+                .orElse(0);
     }
 }
