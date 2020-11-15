@@ -9,12 +9,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository("fakeDao")
-/*
-Use the @Repository tag to tell Spring that this class needs to be instantiated as a bean for other classes.
-Can also say @Component but @Repository says that this is a DAO component.
-You can optionally give it a name if the interface is implemented multiple times.
-This class is responsible to perform all the CRUD operations therefore needs logic to know how to do that
- */
 public class FakePersonDataAccessService implements PersonDao {
 
     private static List<Person> db = new ArrayList<>();

@@ -10,15 +10,6 @@ import java.util.UUID;
 
 @RequestMapping("api/v1/person")
 @RestController
-/*
-The @RestController tag allows us to use methods in this class exposed as REST endpoints
- */
-/*
-The @RequestMapping("path') allows us to tell Spring what endpoint this rest controller is listening to
- */
-/*
-A controller class should only contain all the endpoints needed
- */
 public class PersonController {
 
     private final PersonService personService;
@@ -29,32 +20,16 @@ public class PersonController {
     }
 
     @PostMapping
-    /*
-    The @PostMapping annotation is used on a method and is used to tell Spring that this method is used
-    as a post.
-     */
-    /*
-    The  @RequestBody tag in the method parameter is used to tell Spring that we will take the request body
-    that comes in and try to convert it into a Person object.
-     */
     public void addPerson(@RequestBody Person person) {
         personService.addPerson(person);
     }
 
     @GetMapping
-    /*
-    The @GetMapping annotation is used on a method and is used to tell Spring that this method is used
-    as a Get.
-     */
     public List<Person> getAllPeople() {
         return personService.getAllPeople();
     }
 
     @GetMapping(path = "{id}")
-    /*
-    The @PathVariable("id") is used to tell spring to pull in a url parameter that is passed in an endpoint.
-    The @GetMapping(path = "{id}") is used to hit this endpoint when passing in an ID in the endpoint URL.
-     */
     public Person getPersonById(@PathVariable("id") UUID id) {
         return personService.getPersonById(id)
                 .orElse(null);

@@ -11,21 +11,11 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-/*
-Use the  @Service tag to tell Spring that this is a service.
-Can also use @Component here but @Service is much more clearer.
-A service class should also contain all the logic
- */
 public class PersonService {
 
     private final PersonDao personDao;
 
     @Autowired
-    /*
-    Looks for a Bean that matches the parameters in the method and automatically instantiates them.
-    If you autowire an interface, then you must provide some identifier as there could be multiple
-    implementations of a single interface. This is where you would use the @Qualifier tag.
-     */
     public PersonService(@Qualifier("fakeDao") PersonDao personDao) {
         this.personDao = personDao;
     }
