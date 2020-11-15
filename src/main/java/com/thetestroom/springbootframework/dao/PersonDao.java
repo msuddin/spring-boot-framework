@@ -2,6 +2,7 @@ package com.thetestroom.springbootframework.dao;
 
 import com.thetestroom.springbootframework.model.Person;
 
+import java.util.List;
 import java.util.UUID;
 
 // Contains the implementation to connect to a DB
@@ -15,4 +16,6 @@ public interface PersonDao {
         UUID id = UUID.randomUUID();
         return insertPerson(id, person);
     }
+
+    List<Person> selectAllPeople();
 }

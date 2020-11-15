@@ -1,5 +1,7 @@
 package com.thetestroom.springbootframework.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.UUID;
 
 // Class that represents a Person
@@ -8,7 +10,12 @@ public class Person {
     private final UUID id;
     private final String name;
 
-    public Person(UUID id, String name) {
+    /*
+    Use the  @JsonProperty to identify which part of a JSON property maps to which part of the object variable
+    in the constructor.
+     */
+    public Person(@JsonProperty("id") UUID id,
+                  @JsonProperty("name") String name) {
         this.id = id;
         this.name = name;
     }
