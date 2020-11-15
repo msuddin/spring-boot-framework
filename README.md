@@ -20,6 +20,14 @@ Example JSON Request:
 }
 ```
 
+## Testing
+
+### Integration Testing
+
+#### Controller
+
+Used Mockito to mock out the Service layer and called Controller methods
+
 ## Layers in an API
 
 API / Controller Layer -> Service Layer -> Data Access Layer
@@ -66,6 +74,14 @@ These instances are called Beans and used when trying to Autowire them
 ```
 @Repository = tag to tell Spring that this class needs to be instantiated as a bean for other classes
 @Repository("name) = can optionally have names if multiple instances exist
+```
+
+#### Integration Tests
+
+```
+@RunWith(SpringRunner.class) = ???
+@SpringBootTest = ???
+@MockBean = ???
 ```
 
 #### Other
