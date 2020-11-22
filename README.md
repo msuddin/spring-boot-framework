@@ -121,3 +121,45 @@ A service class should contain all the logic needed to perform (business rules)
 ### DAO
 
 A DAO class is responsible to perform CRUD operations on data
+
+## Docker
+
+### Dockerfile
+
+This repo contains a Dockerfile example - a Dockerfile is simple a way to run our API inside a container
+
+#### Instructions
+```
+# Ensure you are in a directory that contains the Dockerfile
+ls -l
+
+# We first need to build our image locally on our machine, we will tag the image also
+docker build . -t spring-example
+
+# Let's confirm that the image has been built
+docker ps -a
+
+# Now let's run the image as a container and expose what port we want to run it on
+docker run -p 8080:8080 spring-example
+```
+
+### Docker Compose
+
+While a docker file is used to build a container, a docker-compose file provides more flexibility around containers.
+
+Using a docker-compose file, you can scale container, run and stop multiple containers, provide port information etc.
+
+#### Instructions
+```
+# Ensure you are in a directory that contains both a Dockerfile and docker-compose.yml file
+ls -l
+
+# Use docker compose to run all services inside your docker compose file
+docker-compose up -d
+
+# Check that your docker containers are running
+docker logs --follow <container-id>
+
+# Once done, use docker compose down to remove all running containers
+docker-compose down
+```

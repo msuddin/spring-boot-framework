@@ -28,7 +28,7 @@ public class PersonControllerTest {
     private PersonService personService;
 
     @Test
-    public void doSomething() {
+    public void shouldBeAbleToCreateAPerson() {
         // Given
         String testName = "Batman";
         List<Person> people = new ArrayList<Person>();
