@@ -4,6 +4,7 @@ import com.thetestroom.springbootframework.model.Person;
 import com.thetestroom.springbootframework.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.UUID;
@@ -27,6 +28,13 @@ public class PersonController {
     @GetMapping
     public List<Person> getAllPeople() {
         return personService.getAllPeople();
+    }
+
+    @GetMapping(value = "/ext")
+    public String getExternalApiPeople() {
+         RestTemplate restTemplate = new RestTemplate();
+         String response = restTemplate.getForEntity("http://mocked-api:8080/hello", String.class).getBody();
+         return response + " <- This was returned from the mocked API";
     }
 
     @GetMapping(path = "{id}")

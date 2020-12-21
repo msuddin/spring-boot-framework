@@ -5,4 +5,24 @@ services:
     build: .
     container_name: spring-example
     ports:
+      - 1443:1443
+    links:
+      - mocked-api
+    environment:
+      API_HOST: "mocked-api:8080"
+    networks:
+      local:
+
+  mocked-api:
+    image: rodolpheche/wiremock
+    container_name: mocked-api
+    ports:
       - 8080:8080
+      - 8443:8443
+    volumes:
+      - ./src/wiremock:/home/wiremock
+    networks:
+      local:
+
+networks:
+  local:

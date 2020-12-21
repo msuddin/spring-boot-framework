@@ -163,3 +163,27 @@ docker logs --follow <container-id>
 # Once done, use docker compose down to remove all running containers
 docker-compose down
 ```
+
+## Mocking
+
+### Mockito
+
+The test in test/java/.../ are using a mocked bean allowing us to mockout the response.
+
+### Wire Mock
+
+We are also using wiremock inside the docker container to help mock out an external api. 
+Note that we need to do wireing up inside the container and in the url of the external api endpoint for the wiremock to work.
+For Wire Mock to work, I had to add 'networks, links and environment' in the docker-compose file.
+
+#### Instructions
+```
+# Build the api first
+./gradlew clean build
+
+# Use docker compose to run all services inside your docker compose file
+docker-compose up -d
+
+# Perform the following curl - this will call the /ext mapping endpoint in the person controller - which in turn will call the mocked endpoint
+curl http://localhost:1443/api/v1/person/ext
+```
